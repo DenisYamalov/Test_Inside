@@ -1,0 +1,3 @@
+--CREATE USER test WITH PASSWORD 'test' CREATEDB;
+--CREATE DATABASE test OWNER test;
+--GRANT pg_read_server_files TO test;
