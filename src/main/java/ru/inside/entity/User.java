@@ -1,17 +1,25 @@
 package ru.inside.entity;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 
 @Entity
 @Table(name = "users", schema = "test_inside")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private int id;
+
     @Column(name = "name", unique = true, nullable = false, length = 100)
     private String name;
+
     @Column(name = "password", nullable = false, length = 100)
     private String password;
+
+    public User() {
+
+    }
 
     public int getId() {
 
@@ -44,7 +52,6 @@ public class User {
         return "User{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", password='" + password + '\'' +
                 '}';
     }
 }
