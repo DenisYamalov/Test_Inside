@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.HttpClientErrorException;
+import ru.inside.Exceptions.MyException;
 import ru.inside.config.jwt.JwtProvider;
 import ru.inside.dto.AuthResponse;
 import ru.inside.dto.AuthRequest;
@@ -36,9 +38,13 @@ public class AuthController {
     }
 
     @PostMapping("/auth")
-    public AuthResponse auth(@RequestBody AuthRequest request){
+    public AuthResponse auth(@RequestBody AuthRequest request) throws MyException {
 
         User user = userService.findByNameAndPassword(request.getName(),request.getPassword());
+        log.info("!!!! Here is USER" + user);
+        if (user==null){
+            throw new MyException("Wrong name or password");
+        }
         String token = jwtProvider.generateToken(user.getName());
         return new AuthResponse(token);
     }
