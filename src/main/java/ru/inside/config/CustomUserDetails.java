@@ -9,6 +9,9 @@ import ru.inside.entity.User;
 import java.util.Collection;
 import java.util.Collections;
 
+/**
+ * Security user details configuration
+ */
 @Component
 public class CustomUserDetails implements UserDetails {
 

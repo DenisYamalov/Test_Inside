@@ -12,14 +12,18 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
 
+/**
+ * Class to generate, validate and extract login from token
+ */
 @Component
 public class JwtProvider {
-    public static final Logger log= LoggerFactory.getLogger(JwtProvider.class);
+    public static final Logger log = LoggerFactory.getLogger(JwtProvider.class);
 
     @Value("$(jwt.secret)")
     private String jwtSecret;
 
     public String generateToken(String name) {
+
         Date date = Date.from(LocalDate.now().plusDays(30).atStartOfDay(ZoneId.systemDefault()).toInstant());
         return Jwts.builder()
                 .setSubject(name)
@@ -29,6 +33,7 @@ public class JwtProvider {
     }
 
     public boolean validateToken(String token) {
+
         try {
             Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token);
             return true;
@@ -39,6 +44,7 @@ public class JwtProvider {
     }
 
     public String getLoginFromToken(String token) {
+
         Claims claims = Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody();
         return claims.getSubject();
     }

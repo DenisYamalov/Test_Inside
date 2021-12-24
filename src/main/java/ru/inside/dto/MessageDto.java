@@ -10,15 +10,15 @@ public class MessageDto {
         return name;
     }
 
-    public String getMessage() {
-
-        return message;
-    }
-
     public MessageDto setName(String name) {
 
         this.name = name;
         return this;
+    }
+
+    public String getMessage() {
+
+        return message;
     }
 
     public MessageDto setMessage(String message) {

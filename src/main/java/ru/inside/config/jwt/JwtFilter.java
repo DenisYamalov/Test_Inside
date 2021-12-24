@@ -19,6 +19,9 @@ import java.io.IOException;
 
 import static org.springframework.util.StringUtils.hasText;
 
+/**
+ * Token checking filter
+ */
 @Component
 public class JwtFilter extends GenericFilterBean {
 
@@ -37,14 +40,15 @@ public class JwtFilter extends GenericFilterBean {
 
         log.info("do filter");
         String token = getTokenFromRequest((HttpServletRequest) request);
-        if (token!=null && jwtProvider.validateToken(token)){
+        if (token != null && jwtProvider.validateToken(token)) {
             String userName = jwtProvider.getLoginFromToken(token);
-            log.info(userName +" is logging in");
+            log.info(userName + " is logging in");
             CustomUserDetails details = customUserDetailsService.loadUserByUsername(userName);
-            UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(details,null,details.getAuthorities());
+            UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(details, null,
+                    details.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(auth);
         }
-        chain.doFilter(request,response);
+        chain.doFilter(request, response);
     }
 
     private String getTokenFromRequest(HttpServletRequest request) {

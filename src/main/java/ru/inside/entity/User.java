@@ -1,9 +1,10 @@
 package ru.inside.entity;
 
-import org.hibernate.annotations.GenericGenerator;
-
 import javax.persistence.*;
 
+/**
+ * User entity
+ */
 @Entity
 @Table(name = "users", schema = "test_inside")
 public class User {
